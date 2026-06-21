@@ -51,19 +51,34 @@ void insertion_sort(int *arr, int n) {
 /* ── Búsqueda ─────────────────────────────────────────── */
 
 int busqueda_lineal(int *arr, int n, int valor) {
-    /* TODO: implementar */
-    (void)arr;
-    (void)n;
-    (void)valor;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == valor) {
+            return i;
+        }
+    }
+    
     return -1;
 }
 
 int busqueda_binaria(int *arr, int n, int valor) {
-    /* TODO: implementar */
-    (void)arr;
-    (void)n;
-    (void)valor;
-    return -1;
+    int izq = 0;
+    int der = n - 1;
+
+    while (izq <= der) {
+        int mid = izq + (der - izq) / 2;
+
+        if (arr[mid] == valor) {
+            return mid; 
+        }
+        
+        if (arr[mid] < valor) {
+            izq = mid + 1; 
+        } else {
+            der = mid - 1; 
+        }
+    }
+
+    return -1; 
 }
 
 int buscar_ocurrencias(int *arr, int n, int valor, int *posiciones) {

@@ -25,30 +25,38 @@ void bubble_sort(int *arr, int n) {
 }
 
 void selection_sort(int *arr, int n) {
-    int i, j, min_idx, tmp;
+    int i, j, min, tmp;
 
     for (i = 0; i < n - 1; i++) {
-        min_idx = i;
+        min = i;
 
         for (j = i + 1; j < n; j++) {
-            if (*(arr + j) < *(arr + min_idx)) {
-                min_idx = j;
+            if (arr[j] < arr[min]) {
+                min = j;
             }
         }
 
-        tmp = *(arr + i);
-        *(arr + i) = *(arr + min_idx);
-        *(arr + min_idx) = tmp;
+        tmp = arr[i];
+        arr[i] = arr[min];
+        arr[min] = tmp;
     }
 }
 
 void insertion_sort(int *arr, int n) {
-    /* TODO: implementar */
-    (void)arr;
-    (void)n;
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];
+        int j = i - 1;
+
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+
+        arr[j + 1] = key;
+    }
 }
 
-/* ── Búsqueda ─────────────────────────────────────────── */
+/* ── Búsquedas ────────────────────────────────────────── */
 
 int busqueda_lineal(int *arr, int n, int valor) {
     for (int i = 0; i < n; i++) {
@@ -56,7 +64,6 @@ int busqueda_lineal(int *arr, int n, int valor) {
             return i;
         }
     }
-    
     return -1;
 }
 
@@ -67,28 +74,25 @@ int busqueda_binaria(int *arr, int n, int valor) {
     while (izq <= der) {
         int mid = izq + (der - izq) / 2;
 
-        if (arr[mid] == valor) {
-            return mid; 
-        }
-        
-        if (arr[mid] < valor) {
-            izq = mid + 1; 
-        } else {
-            der = mid - 1; 
-        }
+        if (arr[mid] == valor) return mid;
+
+        if (arr[mid] < valor)
+            izq = mid + 1;
+        else
+            der = mid - 1;
     }
 
-    return -1; 
+    return -1;
 }
 
 int buscar_ocurrencias(int *arr, int n, int valor, int *posiciones) {
-    int i, k = 0;
+    int k = 0;
 
-    for (i = 0; i < n; i++) {
-        if (*(arr + i) == valor) {
-            *(posiciones + k) = i;
-            k++;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == valor) {
+            posiciones[k++] = i;
         }
     }
 
     return k;
+}
